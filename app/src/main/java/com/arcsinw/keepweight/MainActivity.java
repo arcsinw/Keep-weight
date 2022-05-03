@@ -7,13 +7,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.arcsinw.keepweight.model.Weight;
 import com.arcsinw.keepweight.utils.DataBaseHelper;
@@ -53,19 +53,22 @@ public class MainActivity extends AppCompatActivity {
         List<Weight> weights = dataBaseHelper.getWeights();
         weightEditText = findViewById(R.id.weightEditText);
 
-        WeightAdapter adapter = new WeightAdapter(MainActivity.this, R.layout.weight_list_item, weights);
-        ListView weightListView = (ListView) findViewById(R.id.weightListView);
-        weightListView.setAdapter(adapter);
+        WeightAdapter adapter = new WeightAdapter(weights);
+        RecyclerView weightRecyclerView = (RecyclerView) findViewById(R.id.weightListView);
+        weightRecyclerView.setLayoutManager(new LinearLayoutManager(this) {{
+            setOrientation(RecyclerView.VERTICAL);
+        }});
+        weightRecyclerView.setAdapter(adapter);
 
-        weightListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                WeightAdapter weightAdapter = (WeightAdapter) adapterView.getAdapter();
-                Weight weight = weightAdapter.getItem(i);
-
-                Toast.makeText(MainActivity.this, String.valueOf(weight.getWeight()), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        weightListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                WeightAdapter weightAdapter = (WeightAdapter) adapterView.getAdapter();
+//                Weight weight = weightAdapter.getItem(i);
+//
+//                Toast.makeText(MainActivity.this, String.valueOf(weight.getWeight()), Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     private EditText weightEditText;
@@ -84,8 +87,11 @@ public class MainActivity extends AppCompatActivity {
         List<Weight> weights = dataBaseHelper.getWeights();
         weightEditText = findViewById(R.id.weightEditText);
 
-        WeightAdapter adapter = new WeightAdapter(MainActivity.this, R.layout.weight_list_item, weights);
-        ListView weightListView = (ListView) findViewById(R.id.weightListView);
-        weightListView.setAdapter(adapter);
+        WeightAdapter adapter = new WeightAdapter(weights);
+        RecyclerView weightRecyclerView = (RecyclerView) findViewById(R.id.weightListView);
+        weightRecyclerView.setLayoutManager(new LinearLayoutManager(this) {{
+            setOrientation(RecyclerView.VERTICAL);
+        }});
+        weightRecyclerView.setAdapter(adapter);
     }
 }

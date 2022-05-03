@@ -8,5 +8,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="themeColor">#FF5722</color>
+    <!--    font color    -->
+    <color name="foregroundThemeColor">#FF5722</color>
+    <color name="foregroundFontColor">#616161</color>
+
+    <!--    background color    -->
+    <color name="listViewItemBackgroundColor">#FFFFFF</color>
+
+    <color name="pageBackgroundColor">#E4E4E4</color>
 </resources>
