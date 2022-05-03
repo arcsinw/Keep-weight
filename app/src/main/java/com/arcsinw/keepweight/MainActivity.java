@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -43,9 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
     private DataBaseHelper dataBaseHelper;
 
-
-    private String[] data = {"TEST1", "TEST2", "TEST1", "TEST2", "TEST1", "TEST2", "TEST1", "TEST2", "TEST1", "TEST2", "TEST1", "TEST2", "TEST2", "TEST1", "TEST2", "TEST1", "TEST2", "TEST2", "TEST1", "TEST2", "TEST1", "TEST2", "TEST2", "TEST1", "TEST2", "TEST1", "TEST2"};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +56,16 @@ public class MainActivity extends AppCompatActivity {
         WeightAdapter adapter = new WeightAdapter(MainActivity.this, R.layout.weight_list_item, weights);
         ListView weightListView = (ListView) findViewById(R.id.weightListView);
         weightListView.setAdapter(adapter);
+
+        weightListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                WeightAdapter weightAdapter = (WeightAdapter) adapterView.getAdapter();
+                Weight weight = weightAdapter.getItem(i);
+
+                Toast.makeText(MainActivity.this, String.valueOf(weight.getWeight()), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private EditText weightEditText;
@@ -71,5 +79,13 @@ public class MainActivity extends AppCompatActivity {
         values.put("create_time", System.currentTimeMillis());
         database.insert("weight", null, values);
         Toast.makeText(MainActivity.this, "Successfully Added", Toast.LENGTH_SHORT).show();
+
+        dataBaseHelper = new DataBaseHelper(this, "keep_weight.db", null, 1);
+        List<Weight> weights = dataBaseHelper.getWeights();
+        weightEditText = findViewById(R.id.weightEditText);
+
+        WeightAdapter adapter = new WeightAdapter(MainActivity.this, R.layout.weight_list_item, weights);
+        ListView weightListView = (ListView) findViewById(R.id.weightListView);
+        weightListView.setAdapter(adapter);
     }
 }

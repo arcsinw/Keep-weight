@@ -28,12 +28,30 @@ public class WeightAdapter extends ArrayAdapter<Weight> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Weight weight = getItem(position);
 
-        View view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
-        TextView weightTextView = view.findViewById(R.id.weight);
-        TextView timeTextView = view.findViewById(R.id.time);
+        View listItemView;
+        WeightViewHolder weightViewHolder;
 
-        weightTextView.setText(String.valueOf(weight.getWeight()));
-        timeTextView.setText(String.valueOf(weight.getCreateTime()));
-        return view;
+        if (null != convertView) {
+            listItemView = convertView;
+            weightViewHolder = (WeightViewHolder) convertView.getTag();
+        } else {
+            listItemView = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
+
+            weightViewHolder = new WeightViewHolder();
+            weightViewHolder.weightTextView = listItemView.findViewById(R.id.weight);
+            weightViewHolder.timeTextView = listItemView.findViewById(R.id.time);
+
+            listItemView.setTag(weightViewHolder);
+        }
+        weightViewHolder.weightTextView.setText(String.valueOf(weight.getWeight()));
+        weightViewHolder.timeTextView.setText(String.valueOf(weight.getCreateTime()));
+        return listItemView;
+    }
+
+
+    class WeightViewHolder {
+        TextView weightTextView;
+
+        TextView timeTextView;
     }
 }

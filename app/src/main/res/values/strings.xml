@@ -6,5 +6,6 @@
 
     <!--    Button    -->
     <string name="text_addWeightBtn">Add weight</string>
+    <string name="kg">KG</string>
 
 </resources>
